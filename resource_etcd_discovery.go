@@ -8,7 +8,7 @@ import (
 	"github.com/hashicorp/terraform/helper/schema"
 )
 
-func resourceEtcdDiscoveryUrl() *schema.Resource {
+func resourceEtcdDiscovery() *schema.Resource {
 	return &schema.Resource{
 		Schema: map[string]*schema.Schema{
 			"url": &schema.Schema{
