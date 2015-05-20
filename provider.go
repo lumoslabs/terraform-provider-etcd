@@ -1,4 +1,4 @@
-package discovery
+package main
 
 import (
 	"github.com/hashicorp/terraform/helper/schema"
@@ -8,7 +8,7 @@ import (
 func Provider() terraform.ResourceProvider {
 	return &schema.Provider{
 		ResourcesMap: map[string]*schema.Resource{
-			"etcd_discovery_url": resourceEtcdDiscoveryUrl(),
+			"etcd_discovery": resourceEtcdDiscovery(),
 		},
 	}
 }
