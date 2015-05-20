@@ -1,11 +1,11 @@
-package discovery
+package main
 
 import (
-	// "fmt"
-	// "io/ioutil"
-	// "log"
-	// "net/http"
+	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
+	"io/ioutil"
+	"log"
+	"net/http"
 )
 
 func resourceEtcdDiscovery() *schema.Resource {
@@ -31,43 +31,37 @@ func resourceEtcdDiscovery() *schema.Resource {
 }
 
 func resourceEtcdDiscoveryCreate(d *schema.ResourceData, meta interface{}) error {
-	/*
-		url := d.Get("url").(string)
-		size := d.Get("size").(string)
+	url := d.Get("url").(string)
+	size := d.Get("size").(string)
 
-		discoveryURL := fmt.Sprintf("%v?size=%w", url, size)
+	discoveryURL := fmt.Sprintf("%v?size=%w", url, size)
+	log.Printf("[info] etcd Discovery URL: ", discoveryURL)
 
-		log.Printf("[info] etcd Discovery URL: ", url)
+	// Create client and request
+	client := &http.Client{}
+	req, err := http.NewRequest("GET", discoveryURL, nil)
+	if err != nil {
+		fmt.Println("[error]", err)
+	}
 
-		// Create client
-		client := &http.Client{}
+	parseFormErr := req.ParseForm()
+	if parseFormErr != nil {
+		fmt.Println(parseFormErr)
+	}
 
-		// Create request
-		req, err := http.NewRequest("GET", discoveryURL, nil)
+	// Fetch Request
+	resp, err := client.Do(req)
 
-		if err != nil {
-			fmt.Println("[error]", err)
-		}
+	// Read Response Body
+	defer resp.Body.Close()
 
-		parseFormErr := req.ParseForm()
-		if parseFormErr != nil {
-			fmt.Println(parseFormErr)
-		}
-		// Fetch Request
-		resp, err := client.Do(req)
+	body, err := ioutil.ReadAll(resp.Body)
+	fmt.Println(string(body))
+	log.Printf("[info] creating new etcd discovery token.")
 
-		// Read Response Body
-		defer resp.Body.Close()
+	d.SetId(string(body))
 
-		body, err := ioutil.ReadAll(resp.Body)
-		fmt.Println(string(body))
-		log.Printf("[info] creating new etcd discovery token.")
-
-		d.SetId(string(body))
-
-		return resourceEtcdDiscoveryTokenRead(d, meta)
-	*/
-	return nil
+	return resourceEtcdDiscoveryRead(d, meta)
 }
 
 func resourceEtcdDiscoveryRead(d *schema.ResourceData, meta interface{}) error {
