@@ -12,8 +12,9 @@ Usage
 
 ```
 resource "etcd_discovery" "etcd-cluster-1" {
-	url = "https://discovery.etcd.io/new" //Default
-	size = 3 //Default
+	//Default Values
+	url = "https://discovery.etcd.io/new"
+	size = 3 
 }
 
 resource "template_file" "init" {
