@@ -8,6 +8,7 @@ import (
 	"log"
 	"net/http"
 	"net/url"
+	"strings"
 )
 
 // type EtcdToken struct {
@@ -26,6 +27,10 @@ func resourceEtcdDiscovery() *schema.Resource {
 				Type:     schema.TypeString,
 				Required: false,
 				Default:  "3",
+			},
+			"token": &schema.Schema{
+				Type:     schema.TypeString,
+				Optional: true,
 			},
 		},
 
@@ -77,7 +82,12 @@ func resourceEtcdDiscoveryCreate(d *schema.ResourceData, meta interface{}) error
 }
 
 func resourceEtcdDiscoveryRead(d *schema.ResourceData, meta interface{}) error {
-	d.Set("url", d.Id())
+	etcd, err := url.Parse(d.Id())
+	if err != nil {
+		fmt.Println("[ERROR]", err)
+	}
+
+	d.Set("token", strings.Trim(etcd.Path, "/"))
 
 	return nil
 }

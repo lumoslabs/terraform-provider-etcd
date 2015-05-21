@@ -11,12 +11,15 @@ Usage
 -----
 
 ```
-resource "etcd_discovery" "etcd-cluster-1" {}
+resource "etcd_discovery" "etcd-cluster-1" {
+	url = "https://discovery.etcd.io/new" //Default
+	size = 3 //Default
+}
 
 resource "template_file" "init" {
 	filename = "init.tpl"
 	vars {
-		etcd_discovery = "${etcd_discovery.etcd-cluster-1.url}"
+		etcd_discovery = "${etcd_discovery.etcd-cluster-1.id}"
 	}
 }
 
