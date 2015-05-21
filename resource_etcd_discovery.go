@@ -1,7 +1,6 @@
 package main
 
 import (
-	// "encoding/json"
 	"fmt"
 	"github.com/hashicorp/terraform/helper/schema"
 	"io/ioutil"
@@ -10,10 +9,6 @@ import (
 	"net/url"
 	"strings"
 )
-
-// type EtcdToken struct {
-// 	url url.URL
-// }
 
 func resourceEtcdDiscovery() *schema.Resource {
 	return &schema.Resource{
