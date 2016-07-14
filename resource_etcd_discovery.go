@@ -2,12 +2,13 @@ package main
 
 import (
 	"fmt"
-	"github.com/hashicorp/terraform/helper/schema"
 	"io/ioutil"
 	"log"
 	"net/http"
 	"net/url"
 	"strings"
+
+	"github.com/hashicorp/terraform/helper/schema"
 )
 
 func resourceEtcdDiscovery() *schema.Resource {
@@ -15,12 +16,14 @@ func resourceEtcdDiscovery() *schema.Resource {
 		Schema: map[string]*schema.Schema{
 			"url": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
+				ForceNew: true,
 				Default:  "https://discovery.etcd.io/new",
 			},
 			"size": &schema.Schema{
 				Type:     schema.TypeString,
-				Required: false,
+				Optional: true,
+				ForceNew: true,
 				Default:  "3",
 			},
 			"token": &schema.Schema{
